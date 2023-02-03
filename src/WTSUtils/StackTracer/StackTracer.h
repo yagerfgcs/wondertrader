@@ -15,6 +15,7 @@
 #include <Psapi.h>
 #else
 #include <stdio.h>
+#include <cstdlib>
 #endif // _WINDOWS
 
 #include <functional>

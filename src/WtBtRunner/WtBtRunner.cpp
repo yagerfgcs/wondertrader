@@ -26,13 +26,23 @@
 #include "../Common/mdump.h"
 #endif
 
+#include <unistd.h>
+
 int main()
 {
 #ifdef _MSC_VER
     CMiniDumper::Enable("WtBtRunner.exe", true, WtHelper::getCWD().c_str());
 #endif
 
-	std::string filename = "logcfgbt.json";
+  // char szBuf[128];
+  // memset(szBuf, 0x00, sizeof( szBuf));
+  // getcwd(szBuf, sizeof(szBuf)-1);
+  // printf("cur path:%s\n", szBuf);
+
+	// std::string filename = szBuf;
+  // filename.append("/logcfgbt.json");
+  std::string filename = "/home/wondertrader/src/build_debug/build_x64/Debug/bin/WtBtRunner/logcfgbt.yaml";
+
 	if (!StdFile::exists(filename.c_str()))
 		filename = "logcfgbt.yaml";
 
@@ -48,8 +58,17 @@ int main()
 #endif
 
 	filename = "configbt.json";
-	if(!StdFile::exists(filename.c_str()))
-		filename = "configbt.yaml";
+	if(!StdFile::exists(filename.c_str())){
+    filename = "/home/wondertrader/src/build_debug/build_x64/Debug/bin/WtBtRunner/configbt.yaml";
+    //filename = "configbt.yaml";
+  }
+		
+  if(StdFile::exists(filename.c_str())){
+    printf("-----is exists\r\n");
+  }
+  else{
+    printf("-----not exists\r\n");
+  }
 
 	WTSVariant* cfg = WTSCfgLoader::load_from_file(filename.c_str(), true);
 	if (cfg == NULL)
